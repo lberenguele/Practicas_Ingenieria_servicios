@@ -1,14 +1,14 @@
 package S1;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class servlet1
@@ -21,6 +21,8 @@ public class servlet1 extends HttpServlet {
      * Default constructor. 
      */
     public servlet1() {
+    	
+    	
         // TODO Auto-generated constructor stub
     }
 
@@ -28,19 +30,28 @@ public class servlet1 extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		getServletContext().getRequestDispatcher("/Formulario.html").forward(request, response);
+				
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		//System.out.println("hola mundo");//
+		
+		/*HttpSession sesion = request.getSession(true);
 		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out.println("<html><head><title>Servlet Test</title></head>");
-		out.println("<body ><center><h1> THIS IS A SERVLET TEST </h1>");
-		String answer = request.getParameter("username");
-		out.println("<h2> The username is:  " + answer + "</h2>");
-		Date date = new Date();
-		out.println("<h3>The time at the server is " + date.toString() +"</h3>");
-		out.println("</center></body></html>");
-		out.close();
+		PrintWriter html = response.getWriter();
+
+		Date date = (Date)sesion.getAttribute("date");
+		if(date != null) {
+		html.print("Último acceso de la sesión: " + date + "<br>");
+		}
+		else {
+		html.print("Este es el primer acceso de la sesión <br>");
+		}
+		date = new Date();
+		sesion.setAttribute("date", date);
+		html.print("Fecha actual: " + date);
+		html.print("</strong>");*/
+		
 	}
 
 	/**
@@ -48,6 +59,39 @@ public class servlet1 extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		//Codigo para borrar la cookies
+		Cookie[ ] cookies = request.getCookies( );
+		for (Cookie cookie: cookies){
+		cookie.setMaxAge(0);
+		cookie.setPath("/");
+		response.addCookie(cookie);
+		}
+		
+		//se leen los parametros
+		String nombre = request.getParameter("nombre");
+		String apellidos = request.getParameter("apellidos");
+		String email = request.getParameter("email");
+		
+		//ser crea el objeto usuario (se supone que ya existe la clase usuario)
+		Usuario usuario = new Usuario (nombre, apellidos, email);
+		
+		HttpSession session = request.getSession();
+		session.setAttribute ("usuario",usuario);
+		
+		Cookie c = new Cookie("EmailCookie",email);
+		c.setMaxAge(60*60*24*365*2);
+		c.setPath("/");
+		response.addCookie(c);
+		
+		session.setAttribute ("usuario",usuario);
+		
+		Cookie b = new Cookie("NombreCookie",nombre);
+		b.setMaxAge(60*60*24*365);
+		b.setPath("/");
+		response.addCookie(b);
+		
+		
 		doGet(request, response);
 	}
 
