@@ -25,7 +25,9 @@ public class servlet1 extends HttpServlet {
     	
         // TODO Auto-generated constructor stub
     }
-
+   
+   
+    		
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -60,13 +62,14 @@ public class servlet1 extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		//Codigo para borrar la cookies
+		/*//Codigo para borrar la cookies
 		Cookie[ ] cookies = request.getCookies( );
 		for (Cookie cookie: cookies){
 		cookie.setMaxAge(0);
 		cookie.setPath("/");
 		response.addCookie(cookie);
-		}
+		}*/
+		
 		
 		//se leen los parametros
 		String nombre = request.getParameter("nombre");
@@ -92,7 +95,31 @@ public class servlet1 extends HttpServlet {
 		response.addCookie(b);
 		
 		
+		/*// Comprueba si la cookie existe, si no existe no entra 
+		HttpSession session1 = request.getSession( );
+		Usuario usuario1 = (Usuario) session1.getAttribute ("usuario");
+		String url = "";
+		// Primero se comprueba si existe ya el usuario en la sesión
+		if (usuario1 == null){
+		//Si no existe el usuario se busca la cookie de email
+		Cookie[ ] cookies = request.getCookies( );
+		String cookieName ="emailCookie";
+		String emailAddress = "";
+		if (cookies != null){
+			for (Cookie cookie: cookies){
+			if (cookieName.equals(cookie.getName())) emailAddress =
+			cookie.getValue();
+			}
+			}
+			//Se comprueba si la cookie no existe:
+			if (emailAddress.equals("")){
+			url = "/PR1/servlet1"; //Se ofrecerá registrarse
+			}
+		}*/
+		
+		
 		doGet(request, response);
 	}
-
+	
+	
 }
