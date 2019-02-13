@@ -32,7 +32,8 @@ public class Servlet1 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		/*getServletContext().getRequestDispatcher("/Formulario.html").forward(request, response);
+		/* getServletContext().getRequestDispatcher("/Formulario.html").forward(request, response);
+		
 		
 		/*response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
@@ -59,7 +60,7 @@ public class Servlet1 extends HttpServlet {
 		html.print("Fecha actual: " + date);
 		html.print("</strong>");
 		
-		int interval = 20;
+		int interval = 5;
 	    sesion.setMaxInactiveInterval(interval);
 		
 		
