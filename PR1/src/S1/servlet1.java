@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -35,6 +38,8 @@ public class servlet1 extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		getServletContext().getRequestDispatcher("/Formulario_ID.html").forward(request, response);
+		
+		
 				
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -107,7 +112,10 @@ public class servlet1 extends HttpServlet {
 			 //El JSP tendrá disponible los datos del usuario en el atributo usuario
 			//String url = "/TablaUsuario.jsp“;"*/
 		
-		PrintWriter html = response.getWriter();
+		
+		
+		
+		// html = response.getWriter();
 			
 		ArrayList<Usuario> user = new ArrayList<Usuario> ();
 		Usuario user1 = new Usuario ("Luis","Berenguel", "luis@gmail.com", "SI", "123");
@@ -116,13 +124,14 @@ public class servlet1 extends HttpServlet {
 		
 		  user.add(user1);
 		  user.add(user2);
-		  user.add(user3);
 		  
 		  // recojo el campo del formulario de login
 		  String UserForm=(String)request.getParameter("email");
 		  String PassForm=(String)request.getParameter("pass");
+		
+		 
 		  
-		  int EsAdmin = 0;
+		 int EsAdmin = 0;
 		  
 		 for(int i = 0; i < user.size(); i++){
 			 
@@ -135,7 +144,7 @@ public class servlet1 extends HttpServlet {
 			 }
 		 }
 		 
-		 if(EsAdmin == 1){
+		/* if(EsAdmin == 1){
 			 request.setAttribute("Usuario", user);
 			 String url = "/TablaUsuario.jsp";
 			 getServletContext().getRequestDispatcher(url).forward(request, response);
@@ -144,7 +153,7 @@ public class servlet1 extends HttpServlet {
 			 //html.print("No eres Administrador");
 			 String url = "/servlet2";
 			 getServletContext().getRequestDispatcher(url).forward(request, response);
-		 }
+		 }*/
 		 
 		 
 		 

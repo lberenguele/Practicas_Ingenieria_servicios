@@ -8,7 +8,7 @@
 </head>
 <body>
 <% HttpSession sessionsa = request.getSession(true);
-   sessionsa.setMaxInactiveInterval(20);
+   sessionsa.setMaxInactiveInterval(10);
 if(sessionsa.getAttribute("user") == null){
 	String nombre = request.getParameter("nombre");
 	String apellidos = request.getParameter("apellidos");
