@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,23 +42,29 @@ public class Servlet1_2 extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	
+		String nombre = request.getParameter("nombre");
+		String apellidos = request.getParameter("apellidos");
+		String email = request.getParameter("email");
 		
-		 try{  
-	    	   
-	           response.setContentType("text/html");  
-	           PrintWriter out = response.getWriter();  
-	             
-	           //String n=request.getParameter("userName");  
-	          // out.print("Welcome "+n);  
-	             
-	           HttpSession session=request.getSession();  
-	         //  session.setAttribute("uname",n);  
-	     
-	           out.print("<a href='/Ing_Serv_Pr1/Formulario.html'>pincha para el registro</a>");  
-	                     
-	           out.close();  
-	     
-	                   }catch(Exception e){System.out.println(e);}  
+		Usuario usuario = new Usuario(nombre, apellidos,email);
+		
+		HttpSession session = request.getSession( );
+		session.setAttribute("email",email);
+		
+		Cookie c = new Cookie("emailCookie", email);
+		c.setMaxAge(60*60*24*365*2);
+		c.setPath("/");
+		response.addCookie(c);
+		
+		
+		//Para eliminar la Cookie
+		Cookie a = new Cookie("emailCookie", email);
+		a.setMaxAge(0);
+		a.setPath("/");
+		response.addCookie(a);
+		
+	 
 	}
 
 }
